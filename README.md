@@ -48,17 +48,3 @@ Pode atualizar o perfil para se tornar vendedor.
 Adicionar produtos ao carrinho.
 Finalizar a compra dos produtos.
 Deve ter uma rota para visualizar todos os pedidos comprados.
-
-EXTRA
-Adicionar uma avaliação de itens, com comentários.
-Adicionar imagens dos produtos.
-Cliente poder cadastrar múltiplos endereços de entrega e configurar um deles como padrão
-Criar uma lista de desejos.
-Cupom de desconto.
-Gerar um pdf com o resumo das vendas.
-
-MODO HARD
-Desenvolver um front para a aplicação.
-Colocar descontos específicos por item e por categoria.
-Fazer a ordenação por relevância, fazendo a ordenação dos itens que tiveram maior quantidade de vendas no último mês.
-Logs do sistema: Gerar logs de todas as alterações no sistema e quem está fazendo essa alteração (tentativas de login, todas as alterações feitas, movimentações do estoque).

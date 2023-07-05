@@ -19,10 +19,11 @@ class UserView(generics.CreateAPIView):
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    serializer_class = []
+    permission_classes = []
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    lookup_field = "id"
 
     @extend_schema(
         operation_id="users_patch",

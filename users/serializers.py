@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from .models import User
-from addresses.serializers import AddressSerializer
+
+# from addresses.serializers import AddressSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -9,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
 
-    address = AddressSerializer(write_only=True)
+    # address = AddressSerializer(write_only=True)
 
     def create(self, validated_data: dict):
         if validated_data.get("is_seller"):
@@ -18,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
             user = User.objects.create_user(**validated_data)
         return user
 
-    def update(self, instance, validated_data):
+    def update(self, instance: User, validated_data: dict):
         for key, value in validated_data.items():
             if key == "password":
                 instance.set_password(value)

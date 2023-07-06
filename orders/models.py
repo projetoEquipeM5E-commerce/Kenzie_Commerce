@@ -2,10 +2,10 @@ from django.db import models
 
 
 class StatusChoices(models.TextChoices):
-    order_placed = ("Pedido realizado.",)
-    in_progress = ("Em andamento.",)
-    delivered = ("Entregue.",)
-    default = "Carrinho vazio."
+    order_placed = ("PEDIDO REALIZADO",)
+    in_progress = ("EM ANDAMENTO",)
+    delivered = ("ENTREGUE",)
+    default = "CARRINHO VAZIO"
 
 
 class Order(models.Model):

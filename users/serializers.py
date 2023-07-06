@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from .models import User
 
-# from addresses.serializers import AddressSerializer
+from addresses.serializers import AddressSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
 
-    # address = AddressSerializer(write_only=True)
+    address = AddressSerializer()
 
     def create(self, validated_data: dict):
         if validated_data.get("is_seller"):
@@ -32,6 +32,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             "id",
+            "first_name",
+            "last_name",
             "username",
             "email",
             "password",

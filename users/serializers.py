@@ -11,15 +11,17 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
-    
+
     address = AddressSerializer()
 
     def create(self, validated_data: dict):
         address = validated_data.pop("address")
         create_address = Address.objects.create(**address)
-        
+
         if validated_data.get("is_seller"):
-            user = User.objects.create_superuser(**validated_data, address=create_address)
+            user = User.objects.create_superuser(
+                **validated_data, address=create_address
+            )
         else:
             user = User.objects.create_user(**validated_data, address=create_address)
         return user

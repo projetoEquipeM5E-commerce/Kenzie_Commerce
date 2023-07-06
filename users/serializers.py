@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from .models import User
+from addresses.models import Address
+from addresses.serializers import AddressSerializer
 
 from addresses.serializers import AddressSerializer
 
@@ -9,14 +11,17 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
-
+    
     address = AddressSerializer()
 
     def create(self, validated_data: dict):
+        address = validated_data.pop("address")
+        create_address = Address.objects.create(**address)
+        
         if validated_data.get("is_seller"):
-            user = User.objects.create_superuser(**validated_data)
+            user = User.objects.create_superuser(**validated_data, address=create_address)
         else:
-            user = User.objects.create_user(**validated_data)
+            user = User.objects.create_user(**validated_data, address=create_address)
         return user
 
     def update(self, instance: User, validated_data: dict):

@@ -4,15 +4,15 @@ from .models import User
 from addresses.models import Address
 from addresses.serializers import AddressSerializer
 
-# from addresses.serializers import AddressSerializer
+from addresses.serializers import AddressSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
+    
     address = AddressSerializer()
-    # address = AddressSerializer(write_only=True)
 
     def create(self, validated_data: dict):
         address = validated_data.pop("address")
@@ -37,6 +37,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             "id",
+            "first_name",
+            "last_name",
             "username",
             "email",
             "password",

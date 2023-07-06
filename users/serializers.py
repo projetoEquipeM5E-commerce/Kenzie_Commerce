@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from .models import User
+from addresses.models import Address
+from addresses.serializers import AddressSerializer
 
 from addresses.serializers import AddressSerializer
 
@@ -9,6 +11,8 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
+    address = AddressSerializer()
+    # address = AddressSerializer(write_only=True)
 
     address = AddressSerializer()
 

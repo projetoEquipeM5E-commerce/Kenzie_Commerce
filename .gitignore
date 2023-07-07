@@ -1,2 +1,4 @@
-venv
 .env
+venv
+__pycache__
+projeto_final_m5

@@ -16,6 +16,3 @@ class Order(models.Model):
     made_by = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="orders"
     )
-
-    def __str__(self) -> str:
-        return f"Order ({self.id}) - ({self.status})"

@@ -12,14 +12,11 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Product',
+            name='Order',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('product_name', models.CharField(max_length=50)),
-                ('category', models.CharField(max_length=50)),
-                ('price', models.FloatField()),
-                ('stock', models.IntegerField()),
-                ('available', models.BooleanField(default=True)),
+                ('status', models.CharField(choices=[('PEDIDO REALIZADO', 'Order Placed'), ('EM ANDAMENTO', 'In Progress'), ('ENTREGUE', 'Delivered'), ('CARRINHO VAZIO', 'Default')], default='CARRINHO VAZIO', max_length=30)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
             ],
         ),
     ]

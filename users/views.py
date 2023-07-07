@@ -7,7 +7,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class UserView(generics.CreateAPIView):
     serializer_class = UserSerializer
-    
+
     @extend_schema(
         operation_id="users_post",
         description="Rota de criação de usuário.",

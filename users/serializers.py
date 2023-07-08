@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
         address = validated_data.pop("address")
         create_address = Address.objects.create(**address)
 
-        if validated_data.get("is_seller"):
+        if validated_data.get("is_superuser"):
             user = User.objects.create_superuser(
                 **validated_data, address=create_address
             )

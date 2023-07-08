@@ -29,11 +29,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
+RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS += [RENDER_EXTERNAL_HOSTNAME, "0.0.0.0"]
 
@@ -65,7 +65,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "kenzie_ecommerce.urls"
@@ -113,7 +112,7 @@ if DATABASE_URL:
     db_from_env = dj_database_url.config(
         default=DATABASE_URL, conn_max_age=500, ssl_require=True
     )
-    DATABASES["default"].update(db_from_env)
+    DATABASE_URL["default"].update(db_from_env)
     DEBUG = False
 
 if not DEBUG:
@@ -143,6 +142,20 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 2,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Kenzie-commerce API",
+    "DESCRIPTION": "Bem-vindo à nossa API de ecommerce! Com recursos de criação de usuário, produtos, carrinho e pedidos, nossa plataforma oferece uma solução completa para suas necessidades de comércio online.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
 
 
 # Internationalization

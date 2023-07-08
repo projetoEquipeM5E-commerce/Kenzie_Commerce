@@ -16,7 +16,7 @@ class ProductSerializer(serializers.ModelSerializer):
         return instance
 
     class Meta:
-        model: Product
+        model = Product
         fields = [
             "id",
             "product_name",

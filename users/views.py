@@ -3,9 +3,11 @@ from .serializers import UserSerializer
 from drf_spectacular.utils import extend_schema
 from .models import User
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
-class UserView(generics.CreateAPIView):
+class UserView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
     serializer_class = UserSerializer
 
     @extend_schema(
@@ -16,10 +18,18 @@ class UserView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
+    @extend_schema(
+        operation_id="users_get",
+        description="Rota de listagem de usuários.",
+        summary="Listar todos os usuários !",
+    )
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
 
     queryset = User.objects.all()
     serializer_class = UserSerializer

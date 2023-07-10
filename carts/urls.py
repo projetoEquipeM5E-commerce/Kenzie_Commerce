@@ -7,4 +7,3 @@ urlpatterns = [
     path("carts/<int:id>/", views.CartRetrieveUpdateDestroyView.as_view()),
 ]
 
-

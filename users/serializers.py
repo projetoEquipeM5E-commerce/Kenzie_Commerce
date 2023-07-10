@@ -3,8 +3,27 @@ from rest_framework.validators import UniqueValidator
 from .models import User
 from addresses.models import Address
 from addresses.serializers import AddressSerializer
-
 from addresses.serializers import AddressSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        email = attrs.get("email")
+        password = attrs.get("password")
+
+        if email and password:
+            user = User.objects.filter(email=email).first()
+
+            if user and user.check_password(password):
+                refresh = self.get_token(user)
+                data = {
+                    "refresh": str(refresh),
+                    "access": str(refresh.access_token),
+                }
+                return data
+
+        raise serializers.ValidationError("Credenciais inválidas.")
 
 
 class UserSerializer(serializers.ModelSerializer):

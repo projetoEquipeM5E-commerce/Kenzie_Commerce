@@ -20,7 +20,8 @@ inflection==0.5.1
 iniconfig==2.0.0
 ipython==8.14.0
 jedi==0.18.2
-jsonschema==4.17.3
+jsonschema==4.18.0
+jsonschema-specifications==2023.6.1
 matplotlib-inline==0.1.6
 packaging==23.1
 parso==0.8.3
@@ -33,11 +34,12 @@ pure-eval==0.2.2
 pycodestyle==2.10.0
 Pygments==2.15.1
 PyJWT==2.7.0
-pyrsistent==0.19.3
 python-dotenv==1.0.0
 pytz==2023.3
 PyYAML==6.0
+referencing==0.29.1
 requests==2.31.0
+rpds-py==0.8.10
 six==1.16.0
 sqlparse==0.4.4
 stack-data==0.6.2

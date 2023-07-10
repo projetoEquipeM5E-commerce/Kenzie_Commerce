@@ -1,23 +1,21 @@
 from rest_framework import serializers
-from rest_framework import generics, status
 from rest_framework.response import Response
 from .models import Cart
-from .serializers import CartSerializer
-from orders.models import Order, OrderItem
+from products.serializers import ProductSerializer
 from products.models import Product
-from .models import Cart
-class CartSerializer(serializers.ModelSerializer):
- cart_id = serializers.IntegerField(read_only=True)
- products =CartSerializer(many=True)#colocar o serializer do products aqui
 
-class Meta:
+class CartSerializer(serializers.ModelSerializer):
+    cart_id = serializers.IntegerField(read_only=True)
+    products = ProductSerializer(many=True)  
+
+    class Meta:
         model = Cart
         fields = [
-            "cart_id"
+            "cart_id",
             "total",
-            "user"
+            "user",
             "products"
         ]
-    
-def create(self, validated_data: dict) -> Cart:
+
+    def create(self, validated_data: dict) -> Cart:
         return Cart.objects.create(**validated_data)

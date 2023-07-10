@@ -1,49 +1,38 @@
-
 from .models import Cart
-from .serializers import CartSerializer
 from products.models import Product
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework import generics
-from .models import Cart, Product
-from .serializers import CartSerializer
-from rest_framework import generics
-from .serializers import CartSerializer
 from django.shortcuts import get_object_or_404
-from rest_framework import generics
-from .models import Cart
 from rest_framework.exceptions import ValidationError
 from .serializers import CartSerializer
 
 class CartListCreateView(generics.ListCreateAPIView):
-    queryset = Cart.objects.all()
-    serializer_class = CartSerializer
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # Definição da classe de view baseada em classe para listar e criar objetos Cart
+    queryset = Cart.objects.all()  # Define o queryset como todos os objetos Cart
+    serializer_class = CartSerializer  # Define a classe de serializer a ser usada
+    authentication_classes = [JWTAuthentication]  # Define as classes de autenticação
+    permission_classes = [IsAuthenticatedOrReadOnly]  # Define as classes de permissão
+
     def perform_create(self, serializer):
-        # pego meu carrinho criado com usuario logado
-        cart = Cart.objects.filter(user= self.request.user)
-        total = cart.total.get()#se não funcionar bota cart["total"] pega meu total
-        products_ordered = cart.products.get()#se não funcionar bota cart["products"] pega meus 
-        #products
-        
-        
-        # pego o id da url do produto
-        product_id = self.kwargs['product_id']
-        
-        # procuro esse id no product se não achar vai das 400 por causa da função get_object_or_404
-        product = get_object_or_404(Product, id=product_id)
-        
-        # Verifico se há estoque suficiente
+        # Método chamado quando um objeto Cart é criado
+        user = self.request.user  # Obtém o usuário atual da requisição
+        cart = Cart.objects.filter(user=user).first()  # Filtra o Cart associado ao usuário
+
+        if cart is None:
+            cart = Cart.objects.create(user=user)  # Cria um novo Cart se não existir
+
+        product_id = self.kwargs.get('product_id')  # Obtém o ID do produto da URL
+        product = get_object_or_404(Product, id=product_id)  # Obtém o objeto Product pelo ID
+
         if product.stock < 1:
-            raise ValidationError("Estoque insuficiente para o produto.")
-        cart.products.add(product)
-        total += product.price
-        
-        # Salvar as alterações no carrinho
-        cart.save()
+            raise ValidationError("Estoque insuficiente para o produto.")  # Lança um erro se o estoque for insuficiente
+
+        cart.products.add(product)  # Adiciona o produto ao campo products do Cart
+        cart.total += product.price  # Atualiza o campo total do Cart com o preço do produto
+        cart.save()  
        
-class CartRetrieveUpdateDestroyView(generics.UpdateDestroyAPIView):
+class CartRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
     authentication_classes = [JWTAuthentication]

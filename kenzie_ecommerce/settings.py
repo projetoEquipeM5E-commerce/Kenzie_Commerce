@@ -113,7 +113,7 @@ if DATABASE_URL:
     db_from_env = dj_database_url.config(
         default=DATABASE_URL, conn_max_age=500, ssl_require=True
     )
-    DATABASE_URL["default"].update(db_from_env)
+    DATABASES["default"].update(db_from_env)
     DEBUG = False
 
 if not DEBUG:

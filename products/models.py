@@ -14,9 +14,7 @@ class Product(models.Model):
     orders = models.ManyToManyField(
         "users.User", related_name="made_by", through="products.ProductOrder"
     )
-    carts = models.ManyToManyField(
-        "users.User", related_name="carts", through="products.ProductCart"
-    )
+    
 
 
 class ProductOrder(models.Model):
@@ -24,6 +22,4 @@ class ProductOrder(models.Model):
     product = models.ForeignKey("products.Product", on_delete=models.CASCADE)
 
 
-class ProductCart(models.Model):
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    product = models.ForeignKey("products.Product", on_delete=models.CASCADE)
+

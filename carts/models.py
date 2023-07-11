@@ -4,9 +4,10 @@ from users.models import User
 
 from products.models import Product
 class Cart(models.Model):
-    cart_id = models.IntegerField(primary_key=True)
+    # id = models.IntegerField(primary_key=True)
     total = models.FloatField(default=0)
     user = models.OneToOneField(User, on_delete=models.PROTECT,related_name='cart')
-    products = models.ForeignKey(Product, related_name='products',on_delete=models.PROTECT )
+    products = models.ManyToManyField("products.Product", related_name='carts')
     class Meta:
-        ordering = ["cart_id"]
+        ordering = ["id"]
+    

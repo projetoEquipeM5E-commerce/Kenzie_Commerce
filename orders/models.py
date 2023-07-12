@@ -13,6 +13,6 @@ class Order(models.Model):
         max_length=30, choices=StatusChoices.choices, default=StatusChoices.default
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    made_by = models.ForeignKey(
+    user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="orders"
     )

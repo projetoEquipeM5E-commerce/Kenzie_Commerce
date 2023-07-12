@@ -4,10 +4,16 @@ from users.serializers import UserSerializer
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    made_by = UserSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
 
-    def create(self, validated_data: dict):
-        return super().create(**validated_data)
+    def create(self, validated_data: dict) -> Order:
+        user = validated_data["user"]
+        product = validated_data["product"]
+
+        order = Order.objects.create(user=user)
+        order.products.add(product)
+        order.save()
+        return order
 
     def update(self, instance: Order, validated_data: dict):
         for key, value in validated_data.items:
@@ -20,4 +26,4 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ["id", "status", "created_at", "made_by"]
+        fields = ["id", "status", "created_at", "user"]

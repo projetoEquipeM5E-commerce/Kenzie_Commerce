@@ -4,5 +4,5 @@ from .views import OrderView
 
 
 urlpatterns = [
-    path("orders/", OrderView.as_view()),
+    path("orders/<int:id>/", OrderView.as_view()),
 ]

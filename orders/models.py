@@ -5,12 +5,11 @@ class StatusChoices(models.TextChoices):
     order_placed = ("PEDIDO REALIZADO",)
     in_progress = ("EM ANDAMENTO",)
     delivered = ("ENTREGUE",)
-    default = "CARRINHO VAZIO"
 
 
 class Order(models.Model):
     status = models.CharField(
-        max_length=30, choices=StatusChoices.choices, default=StatusChoices.default
+        max_length=30, choices=StatusChoices.choices, default=StatusChoices.order_placed
     )
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(

@@ -37,10 +37,10 @@ class IsProductOwnerOrAdmin(permissions.BasePermission):
             return True
 
 
-# class IsOrderProductOwner(permissions.BasePermission):
-# def has_object_permission(self, request: Request, view: View, obj: ProductOrder):
-# if obj.product.seller == request.user:
-# return True
+class IsOrderProductOwner(permissions.BasePermission):
+    def has_object_permission(self, request: Request, view: View, obj: Order):
+        if obj.products.seller == request.user:
+            return True
 
 
 class IsOrderAccountOwner(permissions.BasePermission):

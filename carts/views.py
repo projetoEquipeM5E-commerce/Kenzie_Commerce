@@ -28,12 +28,12 @@ class CartListView(generics.ListAPIView):
 
     def get_queryset(self):
         return Cart.objects.filter(user=self.request.user)
+    
 
-
-class CartDetailedView(generics.RetrieveDestroyAPIView):
+class CartDetailedView(generics.DestroyAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAccountOwner]
-    lookup_field = "id"
 
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    lookup_field = "id"

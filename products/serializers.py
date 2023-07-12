@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Product
 from users.serializers import UserSerializer
-from orders.serializers import OrderSerializer
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -27,21 +26,3 @@ class ProductSerializer(serializers.ModelSerializer):
             "available",
             "seller",
         ]
-
-
-class ProductOrder(serializers.ModelSerializer):
-    made_by = UserSerializer(read_only=True)
-    orders = OrderSerializer()
-
-    class Meta:
-        model = Product
-        fields = ["id", "made_by", "orders"]
-
-
-class ProductCart(serializers.ModelSerializer):
-    made_by = UserSerializer(read_only=True)
-    product = ProductSerializer()
-
-    class Meta:
-        model = Product
-        fields = ["id", "user", "product"]

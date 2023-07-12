@@ -11,19 +11,5 @@ class Product(models.Model):
     seller = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="products"
     )
-    orders = models.ManyToManyField(
-        "users.User", related_name="made_by", through="products.ProductOrder"
-    )
-    carts = models.ManyToManyField(
-        "users.User", related_name="carts", through="products.ProductCart"
-    )
-
-
-class ProductOrder(models.Model):
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    product = models.ForeignKey("products.Product", on_delete=models.CASCADE)
-
-
-class ProductCart(models.Model):
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    product = models.ForeignKey("products.Product", on_delete=models.CASCADE)
+    orders = models.ManyToManyField("orders.Order", related_name="products")
+    carts = models.ManyToManyField("carts.Cart", related_name="products")

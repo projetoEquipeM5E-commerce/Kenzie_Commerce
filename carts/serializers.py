@@ -16,12 +16,12 @@ class CartSerializer(serializers.ModelSerializer):
         if product.stock < 1:
             raise ValidationError("No products in stock.")
 
-        if user.cart:
+        if hasattr(user, "cart"):
             cart = Cart.objects.get(user=user)
             cart.products.add(product)
             cart.save()
             return cart
-
+        
         total = 0
         cart = Cart.objects.create(user=user, total=0)
         cart.products.add(product)

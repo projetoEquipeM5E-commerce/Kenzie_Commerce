@@ -1,4 +1,4 @@
-# Projeto-Final-M5-Kenzie-Ecommerce
+Kenzie-Ecommerce
 
 INTRODUÇÃO
 O seu objetivo neste projeto é criar uma API para sustentar uma plataforma de e-commerce. A plataforma terá diferentes níveis de acesso.
